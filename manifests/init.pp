@@ -1,17 +1,21 @@
 class webserver (
-  $packagename   = $webserver::parameters::packagename,
-  $configfile    = $webserver::parameters::configfile,
-  $configsource  = $webserver::parameters::configsource,
-  $vhostfile     = $webserver::parameters::vhostfile,
-  ) inherits webserver::parameters
+  $ensure         = 'absent',
+  $ensure_service = 'stopped',
+  $ensure_file    = 'absent',
+  # cpecial parameters
+  $packagename    = $webserver::parameters::packagename,
+  $configfile     = $webserver::parameters::configfile,
+  $configsource   = $webserver::parameters::configsource,
+  $vhostfile      = $webserver::parameters::vhostfile,
+  ) inherits ::webserver::parameters
   {
   package { 'webserver-package':
-    ensure      => present,
+    ensure      => $ensure,
     name        => $packagename,
   }
 
   file { 'config-file':
-    ensure      => file,
+    ensure      => $ensure_file,
     path        => $configfile,
     source      => $configsource,
     require     => Package['webserver-package'],
@@ -19,7 +23,7 @@ class webserver (
   }
 
   file { 'vhost-file':
-    ensure      => file,
+    ensure      => $ensure_file,
     path        => $vhostfile,
     content     => template('webserver/vhost.conf.erb'),
     require     => Package['webserver-package'],
@@ -28,11 +32,10 @@ class webserver (
 
   service { 'webserver-service':
     name        => $packagename,
-    ensure      => running,
+    ensure      => $ensure_service,
     enable      => true,
     hasrestart  => true,
     require     => [ File['config-file'], File['vhost-file'] ],
-    subscribe      => [ File['config-file'], File['vhost-file'] ],
 
   }
 }
