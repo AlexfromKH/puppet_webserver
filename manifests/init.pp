@@ -1,7 +1,7 @@
 class puppet_webserver (
-  $ensure         = 'absent',
-  $ensure_service = 'stopped',
-  $ensure_file    = 'absent',
+  $ensure         = 'present',
+  $ensure_service = 'running',
+  $ensure_file    = 'present',
   # special parameters
   $packagename    = $puppet_webserver::parameters::packagename,
   $configfile     = $puppet_webserver::parameters::configfile,
