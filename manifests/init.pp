@@ -7,7 +7,7 @@ class puppet_webserver (
   $configfile     = $webserver::parameters::configfile,
   $configsource   = $webserver::parameters::configsource,
   $vhostfile      = $webserver::parameters::vhostfile,
-  ) inherits ::webserver::parameters
+  ) inherits ::puppet_webserver::parameters
   {
   package { 'webserver-package':
     ensure      => $ensure,
