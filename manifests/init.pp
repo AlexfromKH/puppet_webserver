@@ -2,11 +2,11 @@ class puppet_webserver (
   $ensure         = 'absent',
   $ensure_service = 'stopped',
   $ensure_file    = 'absent',
-  # cpecial parameters
-  $packagename    = $webserver::parameters::packagename,
-  $configfile     = $webserver::parameters::configfile,
-  $configsource   = $webserver::parameters::configsource,
-  $vhostfile      = $webserver::parameters::vhostfile,
+  # special parameters
+  $packagename    = $puppet_webserver::parameters::packagename,
+  $configfile     = $puppet_webserver::parameters::configfile,
+  $configsource   = $puppet_webserver::parameters::configsource,
+  $vhostfile      = $puppet_webserver::parameters::vhostfile,
   ) inherits ::puppet_webserver::parameters
   {
   package { 'webserver-package':
@@ -25,7 +25,7 @@ class puppet_webserver (
   file { 'vhost-file':
     ensure      => $ensure_file,
     path        => $vhostfile,
-    content     => template('webserver/vhost.conf.erb'),
+    content     => template('puppet_webserver/vhost.conf.erb'),
     require     => Package['webserver-package'],
     notify      => Service['webserver-service'],
   }
