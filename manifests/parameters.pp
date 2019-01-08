@@ -1,4 +1,4 @@
-class webserver::parameters {
+class puppet_webserver::parameters {
 	if $::osfamily == 'RedHat' {
 		$packagename = 'httpd'
 		$configfile = '/etc/httpd/conf/httpd.conf'
