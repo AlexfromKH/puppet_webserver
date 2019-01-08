@@ -1,4 +1,4 @@
-class webserver (
+class puppet_webserver (
   $ensure         = 'absent',
   $ensure_service = 'stopped',
   $ensure_file    = 'absent',
